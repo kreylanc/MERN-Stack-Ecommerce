@@ -3,7 +3,7 @@ import Link from "@mui/material/Link";
 
 const StyledLink = styled(Link)(({ theme }) => ({
   padding: 4,
-  color: theme.palette.primary.main,
+  color: theme.palette.secondary.main,
   display: "flex",
   justifyContent: "center",
   opacity: 0.8,
@@ -13,7 +13,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
 
   "&:hover": {
-    color: "white",
+    color: theme.palette.secondary.dark,
     opacity: 1,
   },
 }));
