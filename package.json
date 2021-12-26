@@ -1,0 +1,30 @@
+{
+  "name": "eshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon backend/index",
+    "client": "npm start --prefix frontend",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run client\" \"npm run start \""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kreylanc/MERN-Stack-Ecommerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kreylanc/MERN-Stack-Ecommerce/issues"
+  },
+  "homepage": "https://github.com/kreylanc/MERN-Stack-Ecommerce#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "concurrently": "^6.5.1",
+    "nodemon": "^2.0.15"
+  }
+}
