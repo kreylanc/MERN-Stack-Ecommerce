@@ -2,14 +2,32 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
 import { useParams } from "react-router-dom";
-import products from "./../products";
 import ItemRating from "../components/ItemRating";
 import StyledButton from "../components/StyledButton";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const ProductScreen = () => {
   const params = useParams();
-  const product = products.find((p) => p._id === params.id);
+
+  // Rating MUI component changes to uncontrolled when passed undefined
+  // predefining rating value as numeber to fix the error
+  const [product, setProduct] = useState({
+    rating: 0,
+  });
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const response = await axios.get(`/api/products/${params.id}`);
+
+      console.log(`/products/${params.id}`);
+
+      setProduct(response.data);
+    };
+
+    getProduct();
+  }, []);
 
   const ImgContainer = styled(Box)(({ theme }) => ({
     width: 500,
@@ -49,6 +67,7 @@ const ProductScreen = () => {
         >
           {product.description}
         </Typography>
+        {console.log(product.rating)}
         <ItemRating
           ratingValue={product.rating}
           text={`${product.numReviews} reviews`}
@@ -70,7 +89,7 @@ const ProductScreen = () => {
           color="primary"
           size="large"
           disableElevation
-          disabled={product.countInStock > 0 ? "" : "true"}
+          disabled={product.countInStock > 0 ? false : true}
           sx={{ mt: 2, border: "2px solid gray" }}
         >
           Add To Cart
