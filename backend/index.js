@@ -1,24 +1,29 @@
-const express = require("express");
-const products = require("./data/products");
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+import productRoutes from "./routes/productRoutes.js";
+import { notFound, handleError } from "./middleware/errorMiddleware.js";
 
+dotenv.config();
+
+connectDB();
 const app = express();
 
 app.get("/", (req, res) => {
   res.send("App is running");
 });
 
-//get the list of all products
-app.get("/api/products", (req, res) => {
-  //will convert the data even if it is not a JSON object to JSON
-  res.json(products);
-});
+//  All request made from this url is handled by productRoutes
+app.use("/api/products", productRoutes);
 
-//get the specific product detail
-app.get("/api/products/:id", (req, res) => {
-  //checks if the requested id matches with the id from the product list
-  const product = products.find((p) => p._id === req.params.id);
-  //pass the single product
-  res.json(product);
-});
+//  Middleware to handle 404 (Not Found) error
+app.use(notFound);
 
-app.listen(5000, console.log("Listening on port 5000"));
+//  Middleware to handle errors
+app.use(handleError);
+
+const port = process.env.PORT || 5000;
+app.listen(
+  port,
+  console.log(`Listening on port ${port} in ${process.env.NODE_ENV} mode`)
+);
